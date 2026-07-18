@@ -8,14 +8,11 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
 import joblib
 
-# Load dataset
 df = pd.read_csv("diabetes.csv")
 
-# Features and target
 X = df.drop("Outcome", axis=1)
 y = df["Outcome"]
 
-# Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -23,16 +20,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# Create model
 model = RandomForestClassifier(
     n_estimators=100,
     random_state=42
 )
 
-# Train model
 model.fit(X_train, y_train)
 
-# Make predictions
 y_pred = model.predict(X_test)
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
@@ -46,7 +40,6 @@ print(confusion_matrix(y_test, y_pred))
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
 
-# Calculate metrics
 metrics = {
     "accuracy": accuracy_score(y_test, y_pred),
     "precision": precision_score(y_test, y_pred),
@@ -55,7 +48,6 @@ metrics = {
     "confusion_matrix": confusion_matrix(y_test, y_pred)
 }
 
-# Save model and metrics
 joblib.dump(model, "model.pkl")
 joblib.dump(metrics, "metrics.pkl")
 
